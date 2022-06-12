@@ -1,0 +1,38 @@
+<template>
+    <section class="section">
+        <div class="container box" style="max-width: 500px">
+            <figure class="image is-4by3 mb-5">
+                <img :src="product.image"/>
+            </figure>
+            <h1 class="title mb-5">{{product.name}}</h1>
+            <p class="subtitle has-text-weight-bold mb-4">{{product.price}}</p>
+        </div>
+    </section>
+</template>
+
+<script>
+import axios from '@/axios'
+
+export default {
+    data () {
+        return {
+            product: {}
+        }
+    },
+    props: {
+        id: {
+            type: Number
+        }
+    },
+    methods: {
+        async getProduct(id) {
+            await axios.get(`bouquets/${id}/`).then(response => {
+                this.product = response.data
+            })
+        }
+    },
+    created () {
+        this.getProduct(this.id);
+    }
+}
+</script>

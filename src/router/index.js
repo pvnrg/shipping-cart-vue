@@ -1,0 +1,51 @@
+import Vue from 'vue'
+import VueRouter from 'vue-router'
+
+Vue.use(VueRouter)
+
+  const routes = [
+  {
+    path: '/',
+    name: 'Products',
+    component: () => import('../views/Products.vue')
+  },
+  {
+    path: '/cart/',
+    name: 'Cart',
+    component: () => import('../views/Cart.vue')
+  },
+  {
+    path: '/products/:id/',
+    name: 'Product',
+    component: () => import('../views/Product.vue'),
+    props (route) {
+      const props = { ...route.params };
+      props.id = +props.id;
+      return props
+    }
+  },
+  // this are for api products
+  {
+    path: 'demoProduct/',
+    name: 'DemoProducts',
+    component: () => import('../views/ListProducts.vue')
+  },    
+  {
+    path: '/demoproducts/:id/',
+    name: 'DemoProduct',
+    component: () => import('../views/DemoProduct.vue'),
+    props (route) {
+      const props = { ...route.params };
+      props.id = +props.id;
+      return props
+    }
+  }  
+]
+
+const router = new VueRouter({
+  mode: 'history',
+  base: process.env.BASE_URL,
+  routes
+})
+
+export default router
